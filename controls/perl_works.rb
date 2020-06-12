@@ -30,7 +30,7 @@ control 'core-plans-perl-works' do
     its('stderr') { should be_empty }
   end
 
-  describe command("#{command_full_path} /hab/svc/perl/config/fixtures/hello.pl") do
+  describe command("#{command_full_path} -e 'print \"Hello, World!\n\"'") do
     its('exit_status') { should eq 0 }
     its('stdout') { should_not be_empty }
     its('stdout') { should match /Hello, World!/ }
