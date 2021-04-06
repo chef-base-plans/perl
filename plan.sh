@@ -32,26 +32,6 @@ pkg_interpreters=(bin/perl)
 do_prepare() {
   do_default_prepare
 
-  # Do not look under `/usr` for dependencies.
-  #
-  # Thanks to: https://github.com/NixOS/nixpkgs/blob/release-15.09/pkgs/development/interpreters/perl/5.22/no-sys-dirs.patch
-  patch -p1 -i "$PLAN_CONTEXT/no-sys-dirs.patch"
-
-  # Several tests related to zlib will fail due to using the system version of
-  # zlib instead of the internal version.
-  #
-  # Thanks to:
-  # http://www.linuxfromscratch.org/lfs/view/development/chapter06/perl.html
-  patch -p1 -i "$PLAN_CONTEXT/skip-wide-character-test.patch"
-
-  # Skip the only other failing test in the suite--not bad, eh?
-  patch -p1 -i "$PLAN_CONTEXT/skip-zlib-tests.patch"
-
-  # Fix perlbug test where PATH makes a line too long
-  #
-  # Thanks to: https://rt.perl.org/Public/Bug/Display.html?id=129048
-  patch -p1 -i "$PLAN_CONTEXT/fix-perlbug-test.patch"
-
   #  Make Cwd work with the `pwd` command from `coreutils` (we cannot rely
   #  on `/bin/pwd` exisiting in an environment)
   sed -i "s,'/bin/pwd','$(pkg_path_for coreutils)/bin/pwd',g" \
@@ -108,6 +88,7 @@ do_build() {
     -Uinstallusrbinperl \
     -Duseshrplib \
     -Dusethreads \
+    -Dusedevel \
     -Dinc_version_list=none \
     -Dlddlflags="-shared ${LDFLAGS}" \
     -Dldflags="${LDFLAGS}"
