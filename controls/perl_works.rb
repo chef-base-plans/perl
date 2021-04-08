@@ -8,7 +8,7 @@ control 'core-plans-perl-works' do
   title 'Ensure perl works as expected'
   desc '
   Verify perl by ensuring that
-  (1) its installation directory exists 
+  (1) its installation directory exists
   (2) perl returns the expected version and functions correctly
   (3) instmodsh, json_pp, pl2pm function as expected
   (4) binaries return expected "usage" output.
@@ -17,7 +17,7 @@ control 'core-plans-perl-works' do
   not also verifying exit_status, etc as the combinations get
   too complicated
   '
-  
+
   # (1) installation directory exists
   plan_installation_directory = command("hab pkg path #{plan_origin}/#{plan_name}")
   describe plan_installation_directory do
@@ -25,7 +25,7 @@ control 'core-plans-perl-works' do
     its('stdout') { should_not be_empty }
     #its('stderr') { should be_empty }
   end
-  
+
   # (2) perl returns the expected version and functions correctly
   plan_pkg_version = plan_installation_directory.stdout.split("/")[5]
   [
@@ -54,19 +54,19 @@ control 'core-plans-perl-works' do
   #   pl2pm returns expected warning for a missing file
   {
     "instmodsh" => {
-      pattern: /List all installed modules/, 
+      pattern: /List all installed modules/,
       command_prefix: "echo 'q' | ",
       command_suffix: "--help",
       io: "stdout",
     },
     "json_pp" => {
-      pattern: /key => \"value\"/, 
+      pattern: /key => \"value\"/,
       command_prefix: "echo '{\"key\":\"value\"}' | ",
       command_suffix: "-f json -t dumper",
       io: "stdout",
     },
     "pl2pm" => {
-      pattern: /Can't open file.that.does.not.exist: No such file or directory at \S+pl2pm line \d+/, 
+      pattern: /Can't open file.that.does.not.exist: No such file or directory at \S+pl2pm line \d+/,
       command_suffix: "file.that.does.not.exist",
       io: "stderr",
     },
@@ -96,7 +96,6 @@ control 'core-plans-perl-works' do
     "pod2text"    => {io: "stdout"},
     "pod2usage"   => {io: "stdout"},
     "podchecker"  => {io: "stdout"},
-    "podselect"   => {io: "stdout"},
     "prove"       => {io: "stdout"},
     "ptar"        => {io: "stderr"},
     "ptardiff"    => {io: "stderr"},
