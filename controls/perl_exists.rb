@@ -7,10 +7,10 @@ control 'core-plans-perl-exists' do
   impact 1.0
   title 'Ensure perl exists'
   desc '
-  Verify perl by ensuring all binaries 
+  Verify perl by ensuring all binaries
   (1) exist and
   (2) are executable'
-  
+
   plan_installation_directory = command("hab pkg path #{plan_origin}/#{plan_name}")
   describe plan_installation_directory do
     its('exit_status') { should eq 0 }
@@ -42,7 +42,6 @@ control 'core-plans-perl-exists' do
     "pod2text",
     "pod2usage",
     "podchecker",
-    "podselect",
     "prove",
     "ptar",
     "ptardiff",

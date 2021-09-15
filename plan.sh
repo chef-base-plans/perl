@@ -1,6 +1,6 @@
 pkg_name=perl
 pkg_origin=core
-pkg_version=5.30.0
+pkg_version=5.32.1
 pkg_maintainer="The Habitat Maintainers <humans@habitat.sh>"
 pkg_description="\
 Perl 5 is a highly capable, feature-rich programming language with over 29 \
@@ -9,7 +9,7 @@ years of development.\
 pkg_upstream_url="http://www.perl.org/"
 pkg_license=('GPL-1.0-or-later' 'Artistic-1.0-Perl')
 pkg_source="http://www.cpan.org/src/5.0/${pkg_name}-${pkg_version}.tar.gz"
-pkg_shasum="851213c754d98ccff042caa40ba7a796b2cee88c5325f121be5cbb61bbf975f2"
+pkg_shasum="03b693901cd8ae807231b1787798cf1f2e0b8a56218d07b7da44f784a7caeb2c"
 pkg_deps=(
   core/glibc
   core/zlib
@@ -31,26 +31,6 @@ pkg_interpreters=(bin/perl)
 
 do_prepare() {
   do_default_prepare
-
-  # Do not look under `/usr` for dependencies.
-  #
-  # Thanks to: https://github.com/NixOS/nixpkgs/blob/release-15.09/pkgs/development/interpreters/perl/5.22/no-sys-dirs.patch
-  patch -p1 -i "$PLAN_CONTEXT/no-sys-dirs.patch"
-
-  # Several tests related to zlib will fail due to using the system version of
-  # zlib instead of the internal version.
-  #
-  # Thanks to:
-  # http://www.linuxfromscratch.org/lfs/view/development/chapter06/perl.html
-  patch -p1 -i "$PLAN_CONTEXT/skip-wide-character-test.patch"
-
-  # Skip the only other failing test in the suite--not bad, eh?
-  patch -p1 -i "$PLAN_CONTEXT/skip-zlib-tests.patch"
-
-  # Fix perlbug test where PATH makes a line too long
-  #
-  # Thanks to: https://rt.perl.org/Public/Bug/Display.html?id=129048
-  patch -p1 -i "$PLAN_CONTEXT/fix-perlbug-test.patch"
 
   #  Make Cwd work with the `pwd` command from `coreutils` (we cannot rely
   #  on `/bin/pwd` exisiting in an environment)
