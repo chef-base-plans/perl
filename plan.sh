@@ -1,6 +1,6 @@
 pkg_name=perl
 pkg_origin=core
-pkg_version=5.32.1
+pkg_version=5.34.0
 pkg_maintainer="The Habitat Maintainers <humans@habitat.sh>"
 pkg_description="\
 Perl 5 is a highly capable, feature-rich programming language with over 29 \
@@ -9,7 +9,7 @@ years of development.\
 pkg_upstream_url="http://www.perl.org/"
 pkg_license=('GPL-1.0-or-later' 'Artistic-1.0-Perl')
 pkg_source="http://www.cpan.org/src/5.0/${pkg_name}-${pkg_version}.tar.gz"
-pkg_shasum="03b693901cd8ae807231b1787798cf1f2e0b8a56218d07b7da44f784a7caeb2c"
+pkg_shasum="551efc818b968b05216024fb0b727ef2ad4c100f8cb6b43fab615fa78ae5be9a"
 pkg_deps=(
   core/glibc
   core/zlib
